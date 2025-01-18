@@ -2,7 +2,6 @@ package com.example.auricle.audio;
 
 import java.io.File;
 
-
 public class Audio {
     private String filename;
     private File file;
