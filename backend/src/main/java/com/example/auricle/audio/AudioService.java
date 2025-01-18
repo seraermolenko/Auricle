@@ -9,7 +9,20 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class AudioService {
     public Response receiveAudio(@RequestBody MultipartFile file) {
-        System.out.println("Data : " + file);
-        return new Response(200, "Received audio");
+        try {
+
+            return new Response(200, "Received audio");
+        } catch (Exception e) {
+            return new Response(500, e.getMessage());
+        }
+    }
+
+    public Response sendAudio(MultipartFile file) {
+        try {
+            String url = "http://206.87.205.209/api/endpoint";
+            return new Response(200, "Sent audio");
+        } catch (Exception e) {
+            return new Response(500, e.getMessage());
+        }
     }
 }

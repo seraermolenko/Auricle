@@ -1,5 +1,6 @@
 package com.example.auricle.audio;
 
+import com.example.auricle.response.Response;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +16,13 @@ public class AudioController {
         this.audioService = audioService;
     }
 
-    @PostMapping
-    public String receiveAudio(@RequestBody MultipartFile file) {
+    @PostMapping("receive")
+    public Response receiveAudio(@RequestBody MultipartFile file) {
         return audioService.receiveAudio(file);
+    }
+
+    @PostMapping("send")
+    public Response sendAudio(@RequestBody MultipartFile file) {
+        return audioService.sendAudio(file);
     }
 }
