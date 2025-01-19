@@ -19,7 +19,7 @@ const Home = () => {
         padding: '5px',
         borderRadius: '12px',
         textAlign: 'center',
-        width: '90vw',
+        width: '100vw',
       }}
       elevation={0}
     >
