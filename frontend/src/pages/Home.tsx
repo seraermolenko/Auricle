@@ -6,8 +6,6 @@ import { useNavigate } from 'react-router-dom'
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import SchoolIcon from '@mui/icons-material/School';
-import {NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink} from "@/components/ui/navigation-menu"
-
 
 const Home = () => {
   const navigate = useNavigate()
@@ -26,67 +24,6 @@ const Home = () => {
       }}
       elevation={0}
     >
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '1rem 3rem',
-          backgroundColor: '#003f6a', 
-          color: 'white',
-        }}
-      >
-        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-          Auricle
-        </Typography>
-
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>
-                Features
-              </NavigationMenuTrigger>
-              <NavigationMenuContent className="bg-white p-6">
-                <div className="text-black flex flex-col gap-2">
-                  <NavigationMenuLink className="w-full" href="/audio-transcription">
-                    <span className="text-black">Audio Transcription</span>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink className="w-full" href="/note-creation">
-                    <span className="text-black">Note Creation</span>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink className="w-full" href="/quiz-creation">
-                    <span className="text-black">Quiz Creation</span>
-                  </NavigationMenuLink>
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>
-                Mission
-              </NavigationMenuTrigger>
-              <NavigationMenuContent className="bg-white p-6">
-                <div className="text-black flex flex-col gap-2">
-                  <NavigationMenuLink className="w-full" href="/accessibility">
-                    <span className="text-black">Accessibility Features</span>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink className="w-full" href="/connections">
-                    <span className="text-black">Empowering Connections</span>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink className="w-full" href="/advocacy">
-                    <span className="text-black">Advocacy and Awareness</span>
-                  </NavigationMenuLink>
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-            <Button>
-              Login
-            </Button>
-          </NavigationMenuList>
-        </NavigationMenu>
-      </Box>
-
       <span>
         <Box
           style={{
