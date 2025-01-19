@@ -1,11 +1,12 @@
 import { Button } from '@/components/ui/button'
 import { Box, Paper } from '@mui/material'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem} from "@/components/ui/dropdown-menu"
-import { Label } from '@/components/ui/label'
 import { ArrowRight } from "lucide-react";
-import { Typography } from "@mui/material";
+import { Typography, Grid2} from "@mui/material";
 import { useNavigate } from 'react-router-dom'
-
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
+import TextSnippetIcon from '@mui/icons-material/TextSnippet';
+import SchoolIcon from '@mui/icons-material/School';
 
 
 const Home = () => {
@@ -45,7 +46,7 @@ const Home = () => {
               fontSize: '4rem', 
             }}
           >
-            Transform audio into notes
+            Transform Audio into Notes
           </Typography>
 
           <p style={{ color: '#6f93ae' }}>
@@ -54,8 +55,8 @@ const Home = () => {
           </p>
 
           <Box>
-            <span className="grid w-full max-w-sm items-center gap-1.5">
-            <Button onClick={goToFeature} variant="outline"> 
+            <span className="Grid w-full max-w-sm items-center gap-1.5">
+            <Button onClick={goToFeature} > 
             <ArrowRight /> Start Recording
             </Button>
               
@@ -74,6 +75,108 @@ const Home = () => {
               
             </Paper>
           </Box>
+          <Grid2 container spacing={4} sx={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+            <Grid2 xs={12} sm={4}>
+              <Paper
+                sx={{
+                  padding: "100px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "white",
+                  color: "#2c3e50",
+                  minHeight: "100px",
+                  borderRadius: "16px",
+                  flexDirection: 'column'
+                }}
+                elevation={2}
+                >
+                <Box
+                  sx={{
+                    backgroundColor: '#2c3e50',
+                    borderRadius: '50%',
+                    padding: '10px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                >
+                  <TextSnippetIcon sx={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center'}} />
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '20px' }}>
+                <Typography variant="h6"> Record Audio</Typography>
+                </Box>
+              </Paper>
+            </Grid2>
+
+            <Grid2 xs={12} sm={4}>
+              <Paper
+                sx={{
+                  padding: "100px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "white",
+                  color: "#2c3e50",
+                  minHeight: "100px",
+                  borderRadius: "16px",
+                  flexDirection: 'column'
+                }}
+                elevation={2}
+              >
+                <Box
+                  sx={{
+                    backgroundColor: '#2c3e50',
+                    borderRadius: '50%',
+                    padding: '10px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                >
+                  <TextSnippetIcon sx={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center'}} />
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '20px' }}>
+                <Typography variant="h6"> Generate Notes</Typography>
+                </Box>
+              </Paper>
+            </Grid2>
+
+            <Grid2 xs={12} sm={4}>
+              <Paper
+                sx={{
+                  padding: "100px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "white",
+                  color: "#2c3e50",
+                  minHeight: "100px",
+                  borderRadius: "16px",
+                  flexDirection: 'column'
+                }}
+                elevation={2}
+              >
+                <Box
+                  sx={{
+                    backgroundColor: '#2c3e50',
+                    borderRadius: '50%',
+                    padding: '10px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}
+                >
+                  <SchoolIcon sx={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center'}} />
+                </Box>
+
+                <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '20px' }}>
+                  <Typography variant="h6">Smart Learning</Typography>
+                </Box>
+              </Paper>
+            </Grid2>
+            
+          </Grid2>
         </Box>
       </span>
     </Paper>
