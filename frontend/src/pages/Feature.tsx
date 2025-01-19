@@ -294,7 +294,7 @@ const Feature = () => {
             gap: '1rem',
           }}
         >
-          <h1 style={{ color: '#003f6a', marginTop: '4rem' }}>Lecture Transcriber</h1>
+          <h1 style={{ color: '#003f6a', marginTop: '-6rem' }}>Lecture Transcriber</h1>
           <p style={{ color: '#6f93ae' }}>
             Record or upload your lecture audio for real-time transcription and
             summarization
@@ -303,7 +303,8 @@ const Feature = () => {
             elevation={0}
             sx={{
               padding: '1rem',
-              marginBottom: '1rem',
+              marginBottom: '0.5rem',
+              marginTop: '0.5rem',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
