@@ -15,7 +15,7 @@ This is a web application designed to assist users, especially those who are dea
 ### Technology Stack
 
 - **Frontend:** React
-- **Backend:** Java
+- **Backend:** Flask
 - **LLM Processing:** Google Colab
 
 ### Project Goals
