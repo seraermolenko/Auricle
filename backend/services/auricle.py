@@ -113,7 +113,7 @@ class AudioTranscriptionService:
 
     def summarize(self, transcript: str) -> str:
         """Summarize the transcribed text using LLM"""        
-        prompt = f"Provide summarized notes based on the following text in markdown format. Only output the notes: {transcript}"
+        prompt = f"Provide summarized notes based on the following text. Only output the notes in a clean point-form format using full sentences: {transcript}"
         summary = []
         
         stream = self.llm.create_completion(
@@ -220,7 +220,7 @@ def transcribe_and_summarize():
                 "message": "Successfully processed audio data",
                 "data": {
                     "transcription": transcription,
-                    "summary": summary.replace('* ', '\n* ')
+                    "summary": summary
                 }
             })
         
