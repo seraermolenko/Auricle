@@ -3,9 +3,9 @@ import { Box, Paper } from '@mui/material'
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { Typography, Grid2 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
-import TextSnippetIcon from '@mui/icons-material/TextSnippet';
-import SchoolIcon from '@mui/icons-material/School';
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice'
+import TextSnippetIcon from '@mui/icons-material/TextSnippet'
+import SchoolIcon from '@mui/icons-material/School'
 
 const Home = () => {
   const navigate = useNavigate()
