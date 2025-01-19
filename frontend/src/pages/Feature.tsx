@@ -70,7 +70,7 @@ const Feature = () => {
 
   const callfetch = async (file: File) => {
     const formData = new FormData()
-    formData.append('wavfile', file, file.name)
+    // formData.append('wavfile', file, file.name)
 
     const config = {
       headers: {
@@ -79,6 +79,20 @@ const Feature = () => {
     }
 
     try {
+        // for (let [key, value] of formData.entries()) {
+        //     if (value instanceof File) {
+        //       console.log(`${key}: ${value.name}, size: ${value.size} bytes, type: ${value.type}`);
+        //     } else {
+        //       console.log(key, value);
+        //     }
+        //   }
+        const fileBytes = await file.arrayBuffer();
+
+        // Append the array buffer as a byte array (Uint8Array)
+        formData.append('wavfile', new Blob([fileBytes]), file.name);
+
+        // Log the size of the byte array
+        console.log('Byte array size:', fileBytes.byteLength);
       const response = await axios.post(
         'http://localhost:8080/asr/',
         formData,
