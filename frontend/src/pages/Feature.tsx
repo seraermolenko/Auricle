@@ -101,12 +101,8 @@ const Feature = () => {
     }
   }, [])
 
-  const goToFeature = () => {
-    navigate('/')
-  }
-
   const goToQuiz = () => {
-    navigate('/quiz')
+    navigate('/learning')
   }
 
   const startRecording = async () => {
