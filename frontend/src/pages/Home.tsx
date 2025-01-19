@@ -1,13 +1,16 @@
 import { Button } from '@/components/ui/button'
 import { Box, Paper } from '@mui/material'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem} from "@/components/ui/dropdown-menu"
-import { ArrowRight } from "lucide-react";
-import { Typography, Grid2} from "@mui/material";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu'
+import { ArrowRight } from 'lucide-react'
+import { Typography, Grid2 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
-import TextSnippetIcon from '@mui/icons-material/TextSnippet';
-import SchoolIcon from '@mui/icons-material/School';
-
+import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice'
+import TextSnippetIcon from '@mui/icons-material/TextSnippet'
+import SchoolIcon from '@mui/icons-material/School'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -17,7 +20,7 @@ const Home = () => {
   return (
     <Paper
       sx={{
-        backgroundColor: '#f5faff', 
+        backgroundColor: '#f5faff',
         padding: '5px',
         borderRadius: '12px',
         textAlign: 'center',
@@ -32,8 +35,8 @@ const Home = () => {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '100vh', 
-            textAlign: 'center', 
+            height: '100vh',
+            textAlign: 'center',
             gap: '1rem',
           }}
         >
@@ -41,9 +44,9 @@ const Home = () => {
             variant="h1"
             sx={{
               color: '#003f6a',
-              fontFamily: 'Poppins, sans-serif', 
-              fontWeight: 'bold', 
-              fontSize: '4rem', 
+              fontFamily: 'Poppins, sans-serif',
+              fontWeight: 'bold',
+              fontSize: '4rem',
             }}
           >
             Transform Audio into Notes
@@ -56,10 +59,9 @@ const Home = () => {
 
           <Box>
             <span className="Grid w-full max-w-sm items-center gap-1.5">
-            <Button onClick={goToFeature} > 
-            <ArrowRight /> Start Recording
-            </Button>
-              
+              <Button onClick={goToFeature}>
+                <ArrowRight /> Start Recording
+              </Button>
             </span>
             <Paper
               sx={{
@@ -71,56 +73,25 @@ const Home = () => {
                 margin: '1rem',
               }}
               elevation={0}
-            >
-              
-            </Paper>
+            ></Paper>
           </Box>
-          <Grid2 container spacing={4} sx={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+          <Grid2
+            container
+            spacing={4}
+            sx={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}
+          >
             <Grid2 xs={12} sm={4}>
               <Paper
                 sx={{
-                  padding: "100px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "white",
-                  color: "#2c3e50",
-                  minHeight: "100px",
-                  borderRadius: "16px",
-                  flexDirection: 'column'
-                }}
-                elevation={2}
-                >
-                <Box
-                  sx={{
-                    backgroundColor: '#2c3e50',
-                    borderRadius: '50%',
-                    padding: '10px',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                  }}
-                >
-                  <TextSnippetIcon sx={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center'}} />
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '20px' }}>
-                <Typography variant="h6"> Record Audio</Typography>
-                </Box>
-              </Paper>
-            </Grid2>
-
-            <Grid2 xs={12} sm={4}>
-              <Paper
-                sx={{
-                  padding: "100px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "white",
-                  color: "#2c3e50",
-                  minHeight: "100px",
-                  borderRadius: "16px",
-                  flexDirection: 'column'
+                  padding: '100px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: 'white',
+                  color: '#2c3e50',
+                  minHeight: '100px',
+                  borderRadius: '16px',
+                  flexDirection: 'column',
                 }}
                 elevation={2}
               >
@@ -131,13 +102,26 @@ const Home = () => {
                     padding: '10px',
                     display: 'flex',
                     justifyContent: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
                   }}
                 >
-                  <TextSnippetIcon sx={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center'}} />
+                  <TextSnippetIcon
+                    sx={{
+                      color: 'white',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  />
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '20px' }}>
-                <Typography variant="h6"> Generate Notes</Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginTop: '20px',
+                  }}
+                >
+                  <Typography variant="h6"> Record Audio</Typography>
                 </Box>
               </Paper>
             </Grid2>
@@ -145,15 +129,15 @@ const Home = () => {
             <Grid2 xs={12} sm={4}>
               <Paper
                 sx={{
-                  padding: "100px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "white",
-                  color: "#2c3e50",
-                  minHeight: "100px",
-                  borderRadius: "16px",
-                  flexDirection: 'column'
+                  padding: '100px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: 'white',
+                  color: '#2c3e50',
+                  minHeight: '100px',
+                  borderRadius: '16px',
+                  flexDirection: 'column',
                 }}
                 elevation={2}
               >
@@ -164,18 +148,76 @@ const Home = () => {
                     padding: '10px',
                     display: 'flex',
                     justifyContent: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
                   }}
                 >
-                  <SchoolIcon sx={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center'}} />
+                  <TextSnippetIcon
+                    sx={{
+                      color: 'white',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  />
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginTop: '20px',
+                  }}
+                >
+                  <Typography variant="h6"> Generate Notes</Typography>
+                </Box>
+              </Paper>
+            </Grid2>
+
+            <Grid2 xs={12} sm={4}>
+              <Paper
+                sx={{
+                  padding: '100px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: 'white',
+                  color: '#2c3e50',
+                  minHeight: '100px',
+                  borderRadius: '16px',
+                  flexDirection: 'column',
+                }}
+                elevation={2}
+              >
+                <Box
+                  sx={{
+                    backgroundColor: '#2c3e50',
+                    borderRadius: '50%',
+                    padding: '10px',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <SchoolIcon
+                    sx={{
+                      color: 'white',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  />
                 </Box>
 
-                <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '20px' }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginTop: '20px',
+                  }}
+                >
                   <Typography variant="h6">Smart Learning</Typography>
                 </Box>
               </Paper>
             </Grid2>
-            
           </Grid2>
         </Box>
       </span>
