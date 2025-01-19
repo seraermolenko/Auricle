@@ -1,14 +1,14 @@
 import { Button } from '@/components/ui/button'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Box } from '@mui/material'
 import { useRef } from 'react'
 import Paper from '@mui/material/Paper'
 import { toast } from 'sonner'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Loader2 } from 'lucide-react'
 import {
   Drawer,
   DrawerClose,
@@ -28,18 +28,69 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { TabsDemo } from '@/components/tabsdemo'
+import SettingsVoiceIcon from '@mui/icons-material/SettingsVoice'
+import FileUploadIcon from '@mui/icons-material/FileUpload'
+import MicOffIcon from '@mui/icons-material/MicOff'
+import io from 'socket.io-client'
 
 const Feature = () => {
   const navigate = useNavigate()
   const [data, setData] = useState<string>('')
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string>('')
   const [file, setFile] = useState<File | null>(null)
   const [recording, setRecording] = useState(false)
   const audioChunksRef = useRef<Blob[]>([])
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const [audioURL, setAudioURL] = useState<string | null>(null)
   const streamRef = useRef<MediaStream | null>(null)
+  // sockets
+  const [completeTranscription, setCompleteTranscription] = useState('')
+  const [summary, setSummary] = useState('')
+  const [socket, setSocket] = useState(null)
+
+  //   useEffect(() => {
+  //     const newSocket = io('http://localhost:5000');
+  //     setSocket(newSocket as any);
+
+  //     // Listen for various events
+  //     newSocket.on('status', (data) => {
+  //       toast(data.message);
+  //     });
+
+  //     newSocket.on('total_chunks', (data) => {
+  //       setTotalChunks(data.count);
+  //       setTranscriptionChunks(new Array(data.count).fill(''));
+  //     });
+
+  //     newSocket.on('transcription_progress', (data) => {
+  //       setTranscriptionChunks(prev => {
+  //         const newChunks = [...prev];
+  //         newChunks[data.chunk] = data.text;
+  //         return newChunks;
+  //       });
+  //     });
+
+  //     newSocket.on('transcription_complete', (data) => {
+  //       setCompleteTranscription(data.text);
+  //     });
+
+  //     newSocket.on('summary_chunk', (data) => {
+  //       setSummary(prev => prev + data.text);
+  //     });
+
+  //     newSocket.on('summary_complete', (data) => {
+  //       setSummary(data.text);
+  //     });
+
+  //     newSocket.on('error', (data) => {
+  //       setError(data.message);
+  //     });
+
+  //     return () => {
+  //       newSocket.close();
+  //     };
+  //   }, []);
 
   const goToFeature = () => {
     navigate('/')
@@ -113,7 +164,6 @@ const Feature = () => {
 
   const callfetch = async (file: File) => {
     const formData = new FormData()
-    // formData.append('wavfile', file, file.name)
 
     const config = {
       headers: {
@@ -157,6 +207,7 @@ const Feature = () => {
     } catch (error) {
       console.error('Error uploading file:', error)
       setError('Error uploading file')
+      toast('Error uploading file')
     } finally {
       setLoading(false)
     }
@@ -168,6 +219,7 @@ const Feature = () => {
       await callfetch(file)
     } else {
       setError('Please select a file before submitting.')
+      toast('Please select a file before submitting.')
     }
   }
 
@@ -220,16 +272,22 @@ const Feature = () => {
                 width: '100%',
               }}
             >
-              <Box>
-                <Button onClick={recording ? stopRecording : startRecording}>
-                  {recording ? 'Stop Recording' : 'Start Recording'}
-                </Button>
-                <Button onClick={handleClick} disabled={loading}>
-                  Send File to Auracle
-                </Button>
-                {loading && <p className="padding-top: 1rem">Loading...</p>}
-                {error && <p className="padding-top: 1rem">{error}</p>}
-              </Box>
+              <Button
+                size="lg"
+                onClick={recording ? stopRecording : startRecording}
+                variant={recording ? 'destructive' : 'outline'}
+              >
+                {recording ? <MicOffIcon /> : <SettingsVoiceIcon />}
+                {recording ? 'Stop Recording' : 'Start Recording'}
+              </Button>
+              <Button size="lg" onClick={handleClick} disabled={loading}>
+                {loading ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <FileUploadIcon />
+                )}
+                {loading ? 'Loading...' : 'Send File to Auracle'}
+              </Button>
             </Box>
           </Paper>
 
