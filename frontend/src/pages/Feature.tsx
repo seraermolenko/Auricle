@@ -49,7 +49,7 @@ const Feature = () => {
   const [completeTranscription, setCompleteTranscription] = useState('')
   const [message, setMessage] = useState<string>('')
   const [socket, setSocket] = useState(null)
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     // Initialize Socket.IO connection
@@ -118,7 +118,9 @@ const Feature = () => {
     // When recording stops, create the audio blob and set the URL
     mediaRecorder.onstop = () => {
       const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' })
-      const audioFile = new File([audioBlob], 'recording.wav', { type: 'audio/wav' })
+      const audioFile = new File([audioBlob], 'recording.wav', {
+        type: 'audio/wav',
+      })
       setFile(audioFile) // Set the file state
       const audioUrl = URL.createObjectURL(audioBlob)
       setAudioURL(audioUrl) // Create a preview URL
@@ -141,7 +143,7 @@ const Feature = () => {
     setFile(null)
     setData('')
     if (fileInputRef.current) {
-      fileInputRef.current.value = ''; // Clear the file input
+      fileInputRef.current.value = '' // Clear the file input
     }
     toast('File cleared')
   }
@@ -152,19 +154,23 @@ const Feature = () => {
     if (streamRef.current) {
       stopAudioStream(streamRef.current)
     }
-    
+
     if (mediaRecorderRef.current) {
       return new Promise((resolve) => {
         mediaRecorderRef.current!.onstop = async () => {
-          const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' })
-          const audioFile = new File([audioBlob], 'recording.wav', { type: 'audio/wav' })
+          const audioBlob = new Blob(audioChunksRef.current, {
+            type: 'audio/wav',
+          })
+          const audioFile = new File([audioBlob], 'recording.wav', {
+            type: 'audio/wav',
+          })
           setFile(audioFile)
           const audioUrl = URL.createObjectURL(audioBlob)
           setAudioURL(audioUrl)
-          
+
           setRecording(false)
           setLoading(true)
-          
+
           try {
             await callfetch(audioFile)
             toast('Recording stopped ... sending to Auracle')
@@ -176,7 +182,7 @@ const Feature = () => {
             resolve()
           }
         }
-        
+
         mediaRecorderRef.current!.stop()
       })
     } else {
@@ -239,7 +245,7 @@ const Feature = () => {
       console.log('File uploaded successfully', response.data)
       toast('File uploaded successfully')
     } catch (error) {
-      console.log("jajaj")
+      console.log('jajaj')
       console.error('Error uploading file:', error)
       setError('Error uploading file')
       toast('Error uploading file')
@@ -307,7 +313,12 @@ const Feature = () => {
             <span className="grid w-full max-w-sm items-center gap-1.5">
               <Label htmlFor="audio">Upload lecture recording here</Label>
               <span className="flex flex-row gap-2">
-                <Input id="audio" type="file" onChange={handleFileChange} ref={fileInputRef}/>
+                <Input
+                  id="audio"
+                  type="file"
+                  onChange={handleFileChange}
+                  ref={fileInputRef}
+                />
                 <Button size="icon" onClick={clearFile}>
                   <ClearIcon />
                 </Button>
@@ -345,29 +356,6 @@ const Feature = () => {
           <Paper elevation={0} sx={{ padding: '1rem', width: '63%' }}>
             <TabsDemo data={data ?? ''} />
           </Paper>
-          <Drawer>
-            <DrawerTrigger asChild>
-              <Button>Change filters</Button>
-            </DrawerTrigger>
-            <DrawerContent>
-              <div className="mx-auto w-full max-w-sm">
-                <DrawerHeader>
-                  <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                  <DrawerDescription>
-                    This action cannot be undone.
-                  </DrawerDescription>
-                </DrawerHeader>
-                <DrawerFooter>
-                  <DrawerClose asChild>
-                    <Button variant="outline">Submit</Button>
-                  </DrawerClose>
-                  <DrawerClose asChild>
-                    <Button variant="outline">Cancel</Button>
-                  </DrawerClose>
-                </DrawerFooter>
-              </div>
-            </DrawerContent>
-          </Drawer>
           <Button onClick={goToFeature}>Go Home</Button>
         </Box>
       </span>
