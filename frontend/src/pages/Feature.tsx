@@ -7,6 +7,16 @@ import { Label } from '@/components/ui/label'
 import { Box } from '@mui/material'
 import { useRef } from 'react'
 import Paper from '@mui/material/Paper'
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from '@/components/ui/drawer'
 
 const Feature = () => {
   const navigate = useNavigate()
@@ -126,21 +136,20 @@ const Feature = () => {
             Record or upload your lecture audio for real-time transcription and
             summarization
           </p>
-          <Box>
+          <Paper elevation={0} sx={{ padding: '1rem', marginBottom: '1rem' }}>
             <span className="grid w-full max-w-sm items-center gap-1.5">
               <Label htmlFor="audio">Upload lecture recording here</Label>
               <Input id="audio" type="file" onChange={handleFileChange} />
             </span>
-            <Paper
+            <Box
               sx={{
                 display: 'flex',
                 flexDirection: 'row',
                 gap: '1rem',
-                borderRadius: 1,
-                bgcolor: '#ffffff',
+                borderRadius: '24px',
                 margin: '1rem',
+                width: '100%',
               }}
-              elevation={0}
             >
               <Button onClick={recording ? stopRecording : startRecording}>
                 {recording ? 'Stop Recording' : 'Start Recording'}
@@ -150,9 +159,45 @@ const Feature = () => {
               </Button>
               {loading && <p>Loading...</p>}
               {error && <p>{error}</p>}
-            </Paper>
-          </Box>
+            </Box>
+          </Paper>
 
+          <Paper elevation={0} sx={{ padding: '1rem', width: '70%' }}>
+            <h2>Summary</h2>
+            <Box
+              sx={{
+                padding: '1rem',
+                border: '1px solid #d3d3d3',
+                borderRadius: '12px',
+                textAlign: 'center',
+              }}
+            >
+              <p>{data ? data : 'No summary available yet...'}</p>
+            </Box>
+          </Paper>
+          <Drawer>
+            <DrawerTrigger asChild>
+              <Button>Change filters</Button>
+            </DrawerTrigger>
+            <DrawerContent>
+              <div className="mx-auto w-full max-w-sm">
+                <DrawerHeader>
+                  <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+                  <DrawerDescription>
+                    This action cannot be undone.
+                  </DrawerDescription>
+                </DrawerHeader>
+                <DrawerFooter>
+                  <DrawerClose asChild>
+                    <Button variant="outline">Submit</Button>
+                  </DrawerClose>
+                  <DrawerClose asChild>
+                    <Button variant="outline">Cancel</Button>
+                  </DrawerClose>
+                </DrawerFooter>
+              </div>
+            </DrawerContent>
+          </Drawer>
           <Button onClick={goToFeature}>Go Home</Button>
         </Box>
       </span>
