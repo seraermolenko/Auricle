@@ -39,9 +39,13 @@ export function TabsDemo(data: DataProps) {
           </CardHeader>
           <CardContent className="flex-grow overflow-hidden">
             <ScrollArea className="h-full">
+<<<<<<< Updated upstream
               {data.data && data.data.data?.summary
                 ? data.data.data?.summary
                 : 'No summary available yet... Start recording or upload a file to get started.'}
+=======
+              {'No summary available yet... Start recording or upload a file to get started.'}
+>>>>>>> Stashed changes
             </ScrollArea>
           </CardContent>
         </Card>
@@ -56,9 +60,13 @@ export function TabsDemo(data: DataProps) {
           </CardHeader>
           <CardContent className="flex-grow overflow-hidden">
             <ScrollArea className="h-full">
+<<<<<<< Updated upstream
               {data.data && data.data.data?.transcription
                 ? data.data.data?.transcription
                 : 'No transcription available yet... Start recording or upload a file to get started.'}
+=======
+              {'No transcription available yet... Start recording or upload a file to get started.'}
+>>>>>>> Stashed changes
             </ScrollArea>
           </CardContent>
         </Card>

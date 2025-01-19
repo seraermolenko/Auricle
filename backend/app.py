@@ -2,7 +2,7 @@ from flask import Flask
 from services.auricle import auricle_service, socketio, init_socketio
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
-
+import globals
 
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
@@ -17,11 +17,6 @@ init_socketio(socketio)
 
 app.register_blueprint(auricle_service, url_prefix='/auricle')
 
-@app.route('/')
-def hello():
-    return 'Hello, World!'
-
 if __name__ == "__main__":
     socketio.run(app, host='0.0.0.0', port=5001)
-    # app.run(debug=True) 
-    # socketio.run(host='0.0.0.0', )
+

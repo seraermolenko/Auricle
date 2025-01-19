@@ -7,10 +7,11 @@ from typing import List, Tuple
 from pathlib import Path
 import math
 from flask_cors import CORS, cross_origin
+import globals
 
 from pydub import AudioSegment
 import speech_recognition as sr
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, g
 from huggingface_hub import hf_hub_download
 from llama_cpp import Llama
 
@@ -20,7 +21,7 @@ auricle_service = Blueprint('auricle_service', __name__)
 CORS(auricle_service, resources={
     r"/*": {
         "origins": "*",  # Allow all origins
-        "methods": ["OPTIONS", "POST"],  # Allow only specific methods
+        "methods": ["OPTIONS", "POST", "GET"],  # Allow only specific methods
         "allow_headers": ["Content-Type"]  # Allow specific headers
     }
 })
@@ -45,6 +46,7 @@ class AudioTranscriptionService:
         self.llm = Llama(
             model_path=model_path,
             n_ctx=20000,
+            temperature=0.8,
         )
 
     def split_audio(self, audio_segment: AudioSegment) -> List[AudioSegment]:
@@ -110,7 +112,7 @@ class AudioTranscriptionService:
         return full_transcription
 
     def summarize(self, transcript: str) -> str:
-        """Summarize the transcribed text using LLM"""
+        """Summarize the transcribed text using LLM"""        
         prompt = f"Provide summarized notes based on the following text. Only output the notes: {transcript}"
         summary = []
         
@@ -132,7 +134,30 @@ class AudioTranscriptionService:
         if socketio:
             socketio.emit('summary_complete', {'text': full_summary})
             
+        globals.global_summary = full_summary
         return full_summary
+    
+    def create_quiz(self, summary: str) -> str:
+        prompt = f'''Create a quiz with 5 multiple choice questions based on the following text. 
+        Format the quiz where every question and answer is separated by a new line with the final answer being revealed right 
+        after the question. Scramble the answers such that they are not all the same choice: {summary}'''
+        
+        quiz = []
+        
+        stream = self.llm.create_completion(
+            prompt,
+            max_tokens=10000,
+            stop=["</s>"],
+            echo=True,
+            stream=True
+        )
+        
+        for output in stream:
+            chunk = output["choices"][0]["text"]
+            quiz.append(chunk)
+            
+        full_quiz = "".join(quiz)
+        return full_quiz
 
 def convert_to_wav(input_file_path: str, output_dir: str = None) -> str:
     """Convert input audio file to WAV format"""
@@ -208,3 +233,24 @@ def transcribe_and_summarize():
             "status": "400",
             "message": str(e)
         })
+
+@auricle_service.route('/', methods=['GET'])
+@cross_origin()
+def generate_quiz():
+    service = AudioTranscriptionService()
+    try:
+        quiz = service.create_quiz(globals.global_summary)
+        print(quiz)
+        return jsonify({
+                "status": "200",
+                "message": "Successfully generated quiz",
+                "data": {
+                    "quiz": quiz
+                }
+            })
+    except Exception as e:
+        return jsonify({
+            "status": "400",
+            "message": str(e)
+        })
+
