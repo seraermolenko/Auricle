@@ -16,5 +16,5 @@ app.register_blueprint(auricle_service, url_prefix='/auricle')
 def hello():
     return 'Hello, World!'
 
-if __name__ == "main":
+if __name__ == "__main__":
     app.run(debug=True)
