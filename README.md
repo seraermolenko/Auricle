@@ -16,7 +16,7 @@ This is a web application designed to assist users, especially those who are dea
 
 - **Frontend:** React
 - **Backend:** Flask
-- **LLM Processing:** Google Colab
+- **LLM Processing:** Hugging Face, Llama, Gemma
 
 ### Project Goals
 
