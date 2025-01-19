@@ -26,8 +26,7 @@ const Mission = () => {
         backgroundColor: '#f5faff',
         padding: '20px',
         borderRadius: '12px',
-        width: '100%',
-        minHeight: '100vh',
+        width: '100vw',
       }}
       elevation={0}
     >
