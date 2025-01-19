@@ -333,6 +333,8 @@ const Feature = () => {
                 borderRadius: '24px',
                 margin: '1rem',
                 width: '100%',
+                position: 'relative',
+                left: '1rem',
               }}
             >
               <Button
