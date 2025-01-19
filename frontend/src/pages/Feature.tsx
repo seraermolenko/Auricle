@@ -94,6 +94,23 @@ const Feature = () => {
     }
   }
 
+  const convertFileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file); // Read the file as an ArrayBuffer
+      reader.onload = () => {
+        const arrayBuffer = reader.result;
+        const uint8Array = new Uint8Array(arrayBuffer);
+        let binary = '';
+        uint8Array.forEach((byte) => {
+          binary += String.fromCharCode(byte);
+        });
+        resolve(btoa(binary)); // Convert binary string to Base64
+      };
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
   const callfetch = async (file: File) => {
     const formData = new FormData()
     // formData.append('wavfile', file, file.name)
@@ -104,23 +121,34 @@ const Feature = () => {
       },
     }
 
-    try {
-      // for (let [key, value] of formData.entries()) {
-      //     if (value instanceof File) {
-      //       console.log(`${key}: ${value.name}, size: ${value.size} bytes, type: ${value.type}`);
-      //     } else {
-      //       console.log(key, value);
-      //     }
-      //   }
-      const fileBytes = await file.arrayBuffer()
+       try {
+        // for (let [key, value] of formData.entries()) {
+        //     if (value instanceof File) {
+        //       console.log(`${key}: ${value.name}, size: ${value.size} bytes, type: ${value.type}`);
+        //     } else {
+        //       console.log(key, value);
+        //     }
+        //   }
+        const base64String = await convertFileToBase64(file)
+        formData.append('fileName', file.name);
+        formData.append('fileType', file.type);
+        if (typeof base64String === 'string') {
+        formData.append('file', base64String); // Append Base64 string to FormData
+        }
+        const fileBytes = await file.arrayBuffer();
 
-      // Append the array buffer as a byte array (Uint8Array)
-      formData.append('wavfile', new Blob([fileBytes]), file.name)
+        const byteArray = new Uint8Array(fileBytes);
+        
+        // Optionally, print only the first 100 bytes to avoid large console logs
+        console.log('First 100 bytes:', byteArray.slice(0, 100));
 
-      // Log the size of the byte array
-      console.log('Byte array size:', fileBytes.byteLength)
+        // Append the array buffer as a byte array (Uint8Array)
+        // formData.append('file', base64, file.name);
+
+        // Log the size of the byte array
+        console.log('Byte array size:', fileBytes.byteLength);
       const response = await axios.post(
-        'http://localhost:8080/asr/',
+        'http://127.0.0.1:5000/auricle',
         formData,
         config,
       )
