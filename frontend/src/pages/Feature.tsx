@@ -74,14 +74,14 @@ const Feature = () => {
       console.log('Received transcription:', data.text)
       setMessage(data.text)
       setCompleteTranscription(data.text)
-      toast('Transcription complete!')
+      // toast('Transcription complete!')
     })
 
     newSocket.on('summary_complete', (data) => {
       console.log('Received summary:', data.text)
       setMessage(data.text)
       setCompleteTranscription(data.text)
-      toast('Summary complete!')
+      // toast('Summary complete!')
     })
 
     setSocket(newSocket)
@@ -172,8 +172,8 @@ const Feature = () => {
           setLoading(true)
 
           try {
-            await callfetch(audioFile)
             toast('Recording stopped ... sending to Auracle')
+            await callfetch(audioFile)
           } catch (error) {
             setError('There was a problem with the recording. Please try again')
             toast('There was a problem with the recording. Please try again')
@@ -243,7 +243,7 @@ const Feature = () => {
       )
       setData(response.data ?? '')
       console.log('File uploaded successfully', response.data)
-      toast('File uploaded successfully')
+      toast('Transcription and summary complete!')
     } catch (error) {
       console.log('jajaj')
       console.error('Error uploading file:', error)
@@ -257,8 +257,8 @@ const Feature = () => {
   const handleClick = async () => {
     if (file) {
       setLoading(true)
-      await callfetch(file)
       toast('File submitted to Auracle')
+      await callfetch(file)
     } else {
       setError('Please select a file before submitting.')
       toast('Please select a file before submitting.')
