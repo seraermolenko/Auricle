@@ -1,14 +1,14 @@
 import { Button } from '@/components/ui/button'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Box } from '@mui/material'
 import { useRef } from 'react'
 import Paper from '@mui/material/Paper'
 import { toast } from 'sonner'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Loader2 } from 'lucide-react'
 import {
   Drawer,
   DrawerClose,
@@ -28,18 +28,56 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { TabsDemo } from '@/components/tabsdemo'
+import SettingsVoiceIcon from '@mui/icons-material/SettingsVoice'
+import FileUploadIcon from '@mui/icons-material/FileUpload'
+import MicOffIcon from '@mui/icons-material/MicOff'
+import io from 'socket.io-client'
 
 const Feature = () => {
   const navigate = useNavigate()
   const [data, setData] = useState<string>('')
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string>('')
   const [file, setFile] = useState<File | null>(null)
   const [recording, setRecording] = useState(false)
   const audioChunksRef = useRef<Blob[]>([])
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const [audioURL, setAudioURL] = useState<string | null>(null)
   const streamRef = useRef<MediaStream | null>(null)
+  // sockets
+  const [completeTranscription, setCompleteTranscription] = useState('')
+  const [message, setMessage] = useState<string>('')
+  const [ws, setWs] = useState<WebSocket | null>(null)
+
+  useEffect(() => {
+    const socket = new WebSocket('ws://127.0.0.1:5000/auricle') // replace with your server URL
+
+    // Set WebSocket instance in state
+    setWs(socket)
+
+    // Handle incoming messages from WebSocket server
+    socket.onmessage = (event) => {
+      console.log('Message received:', event.data)
+      setMessage(event.data) // Update state with received message
+      toast(event.data)
+    }
+
+    // Handle WebSocket errors
+    socket.onerror = (error) => {
+      console.error('WebSocket Error:', error)
+      toast('WebSocket Error')
+    }
+
+    // Handle WebSocket connection closure
+    socket.onclose = () => {
+      console.log('WebSocket connection closed')
+    }
+
+    // Cleanup WebSocket connection when the component is unmounted
+    return () => {
+      socket.close()
+    }
+  }, [])
 
   const goToFeature = () => {
     navigate('/')
@@ -94,26 +132,25 @@ const Feature = () => {
     }
   }
 
-  const convertFileToBase64 = (file) => {
+  const convertFileToBase64 = (file: File) => {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsArrayBuffer(file); // Read the file as an ArrayBuffer
+      const reader = new FileReader()
+      reader.readAsArrayBuffer(file) // Read the file as an ArrayBuffer
       reader.onload = () => {
-        const arrayBuffer = reader.result;
-        const uint8Array = new Uint8Array(arrayBuffer);
-        let binary = '';
+        const arrayBuffer = reader.result
+        const uint8Array = new Uint8Array(arrayBuffer as ArrayBuffer)
+        let binary = ''
         uint8Array.forEach((byte) => {
-          binary += String.fromCharCode(byte);
-        });
-        resolve(btoa(binary)); // Convert binary string to Base64
-      };
-      reader.onerror = (error) => reject(error);
-    });
-  };
+          binary += String.fromCharCode(byte)
+        })
+        resolve(btoa(binary)) // Convert binary string to Base64
+      }
+      reader.onerror = (error) => reject(error)
+    })
+  }
 
   const callfetch = async (file: File) => {
     const formData = new FormData()
-    // formData.append('wavfile', file, file.name)
 
     const config = {
       headers: {
@@ -121,32 +158,25 @@ const Feature = () => {
       },
     }
 
-       try {
-        // for (let [key, value] of formData.entries()) {
-        //     if (value instanceof File) {
-        //       console.log(`${key}: ${value.name}, size: ${value.size} bytes, type: ${value.type}`);
-        //     } else {
-        //       console.log(key, value);
-        //     }
-        //   }
-        const base64String = await convertFileToBase64(file)
-        formData.append('fileName', file.name);
-        formData.append('fileType', file.type);
-        if (typeof base64String === 'string') {
-        formData.append('file', base64String); // Append Base64 string to FormData
-        }
-        const fileBytes = await file.arrayBuffer();
+    try {
+      const base64String = await convertFileToBase64(file)
+      formData.append('fileName', file.name)
+      formData.append('fileType', file.type)
+      if (typeof base64String === 'string') {
+        formData.append('file', base64String) // Append Base64 string to FormData
+      }
+      const fileBytes = await file.arrayBuffer()
 
-        const byteArray = new Uint8Array(fileBytes);
-        
-        // Optionally, print only the first 100 bytes to avoid large console logs
-        console.log('First 100 bytes:', byteArray.slice(0, 100));
+      const byteArray = new Uint8Array(fileBytes)
 
-        // Append the array buffer as a byte array (Uint8Array)
-        // formData.append('file', base64, file.name);
+      // Optionally, print only the first 100 bytes to avoid large console logs
+      console.log('First 100 bytes:', byteArray.slice(0, 100))
 
-        // Log the size of the byte array
-        console.log('Byte array size:', fileBytes.byteLength);
+      // Append the array buffer as a byte array (Uint8Array)
+      // formData.append('file', base64, file.name);
+
+      // Log the size of the byte array
+      console.log('Byte array size:', fileBytes.byteLength)
       const response = await axios.post(
         'http://127.0.0.1:5000/auricle',
         formData,
@@ -154,9 +184,11 @@ const Feature = () => {
       )
       setData(response.data ?? '')
       console.log('File uploaded successfully', response.data)
+      toast('File uploaded successfully')
     } catch (error) {
       console.error('Error uploading file:', error)
       setError('Error uploading file')
+      toast('Error uploading file')
     } finally {
       setLoading(false)
     }
@@ -168,6 +200,7 @@ const Feature = () => {
       await callfetch(file)
     } else {
       setError('Please select a file before submitting.')
+      toast('Please select a file before submitting.')
     }
   }
 
@@ -220,16 +253,22 @@ const Feature = () => {
                 width: '100%',
               }}
             >
-              <Box>
-                <Button onClick={recording ? stopRecording : startRecording}>
-                  {recording ? 'Stop Recording' : 'Start Recording'}
-                </Button>
-                <Button onClick={handleClick} disabled={loading}>
-                  Send File to Auracle
-                </Button>
-                {loading && <p className="padding-top: 1rem">Loading...</p>}
-                {error && <p className="padding-top: 1rem">{error}</p>}
-              </Box>
+              <Button
+                size="lg"
+                onClick={recording ? stopRecording : startRecording}
+                variant={recording ? 'destructive' : 'outline'}
+              >
+                {recording ? <MicOffIcon /> : <SettingsVoiceIcon />}
+                {recording ? 'Stop Recording' : 'Start Recording'}
+              </Button>
+              <Button size="lg" onClick={handleClick} disabled={loading}>
+                {loading ? (
+                  <Loader2 className="animate-spin" />
+                ) : (
+                  <FileUploadIcon />
+                )}
+                {loading ? 'Loading...' : 'Send File to Auracle'}
+              </Button>
             </Box>
           </Paper>
 
