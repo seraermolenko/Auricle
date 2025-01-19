@@ -152,22 +152,33 @@ const Feature = () => {
     if (streamRef.current) {
       stopAudioStream(streamRef.current)
     }
+    
     if (mediaRecorderRef.current) {
-      // console.log("here")
-      mediaRecorderRef.current.stop() // Stop the recording
-      setRecording(false) // Update state
-    }
-    if (file) {
-      setLoading(true)
-      try {
-        await callfetch(file)
-        toast('Recording stopped ... sending to Auracle')
-      } catch (error) {
-        setError('There was a problem with the recording. Please try again')
-        toast('There was a problem with the recording. Please try again')
-      } finally {
-        setLoading(false)
-      }
+      return new Promise((resolve) => {
+        mediaRecorderRef.current!.onstop = async () => {
+          const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' })
+          const audioFile = new File([audioBlob], 'recording.wav', { type: 'audio/wav' })
+          setFile(audioFile)
+          const audioUrl = URL.createObjectURL(audioBlob)
+          setAudioURL(audioUrl)
+          
+          setRecording(false)
+          setLoading(true)
+          
+          try {
+            await callfetch(audioFile)
+            toast('Recording stopped ... sending to Auracle')
+          } catch (error) {
+            setError('There was a problem with the recording. Please try again')
+            toast('There was a problem with the recording. Please try again')
+          } finally {
+            setLoading(false)
+            resolve()
+          }
+        }
+        
+        mediaRecorderRef.current!.stop()
+      })
     } else {
       setError('There was a problem with the recording.')
       toast('There was a problem with the recording. Please try again')
