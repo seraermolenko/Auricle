@@ -356,7 +356,6 @@ const Feature = () => {
           <Paper elevation={0} sx={{ padding: '1rem', width: '63%' }}>
             <TabsDemo data={data ?? ''} />
           </Paper>
-          <Button onClick={goToFeature}>Go Home</Button>
         </Box>
       </span>
     </Paper>
