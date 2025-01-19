@@ -46,51 +46,38 @@ const Feature = () => {
   const streamRef = useRef<MediaStream | null>(null)
   // sockets
   const [completeTranscription, setCompleteTranscription] = useState('')
-  const [summary, setSummary] = useState('')
-  const [socket, setSocket] = useState(null)
+  const [message, setMessage] = useState<string>('')
+  const [ws, setWs] = useState<WebSocket | null>(null)
 
-  //   useEffect(() => {
-  //     const newSocket = io('http://localhost:5000');
-  //     setSocket(newSocket as any);
+  useEffect(() => {
+    const socket = new WebSocket('ws://127.0.0.1:5000/auricle') // replace with your server URL
 
-  //     // Listen for various events
-  //     newSocket.on('status', (data) => {
-  //       toast(data.message);
-  //     });
+    // Set WebSocket instance in state
+    setWs(socket)
 
-  //     newSocket.on('total_chunks', (data) => {
-  //       setTotalChunks(data.count);
-  //       setTranscriptionChunks(new Array(data.count).fill(''));
-  //     });
+    // Handle incoming messages from WebSocket server
+    socket.onmessage = (event) => {
+      console.log('Message received:', event.data)
+      setMessage(event.data) // Update state with received message
+      toast(event.data)
+    }
 
-  //     newSocket.on('transcription_progress', (data) => {
-  //       setTranscriptionChunks(prev => {
-  //         const newChunks = [...prev];
-  //         newChunks[data.chunk] = data.text;
-  //         return newChunks;
-  //       });
-  //     });
+    // Handle WebSocket errors
+    socket.onerror = (error) => {
+      console.error('WebSocket Error:', error)
+      toast('WebSocket Error')
+    }
 
-  //     newSocket.on('transcription_complete', (data) => {
-  //       setCompleteTranscription(data.text);
-  //     });
+    // Handle WebSocket connection closure
+    socket.onclose = () => {
+      console.log('WebSocket connection closed')
+    }
 
-  //     newSocket.on('summary_chunk', (data) => {
-  //       setSummary(prev => prev + data.text);
-  //     });
-
-  //     newSocket.on('summary_complete', (data) => {
-  //       setSummary(data.text);
-  //     });
-
-  //     newSocket.on('error', (data) => {
-  //       setError(data.message);
-  //     });
-
-  //     return () => {
-  //       newSocket.close();
-  //     };
-  //   }, []);
+    // Cleanup WebSocket connection when the component is unmounted
+    return () => {
+      socket.close()
+    }
+  }, [])
 
   const goToFeature = () => {
     navigate('/')
@@ -145,22 +132,22 @@ const Feature = () => {
     }
   }
 
-  const convertFileToBase64 = (file) => {
+  const convertFileToBase64 = (file: File) => {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsArrayBuffer(file); // Read the file as an ArrayBuffer
+      const reader = new FileReader()
+      reader.readAsArrayBuffer(file) // Read the file as an ArrayBuffer
       reader.onload = () => {
-        const arrayBuffer = reader.result;
-        const uint8Array = new Uint8Array(arrayBuffer);
-        let binary = '';
+        const arrayBuffer = reader.result
+        const uint8Array = new Uint8Array(arrayBuffer as ArrayBuffer)
+        let binary = ''
         uint8Array.forEach((byte) => {
-          binary += String.fromCharCode(byte);
-        });
-        resolve(btoa(binary)); // Convert binary string to Base64
-      };
-      reader.onerror = (error) => reject(error);
-    });
-  };
+          binary += String.fromCharCode(byte)
+        })
+        resolve(btoa(binary)) // Convert binary string to Base64
+      }
+      reader.onerror = (error) => reject(error)
+    })
+  }
 
   const callfetch = async (file: File) => {
     const formData = new FormData()
@@ -171,32 +158,25 @@ const Feature = () => {
       },
     }
 
-       try {
-        // for (let [key, value] of formData.entries()) {
-        //     if (value instanceof File) {
-        //       console.log(`${key}: ${value.name}, size: ${value.size} bytes, type: ${value.type}`);
-        //     } else {
-        //       console.log(key, value);
-        //     }
-        //   }
-        const base64String = await convertFileToBase64(file)
-        formData.append('fileName', file.name);
-        formData.append('fileType', file.type);
-        if (typeof base64String === 'string') {
-        formData.append('file', base64String); // Append Base64 string to FormData
-        }
-        const fileBytes = await file.arrayBuffer();
+    try {
+      const base64String = await convertFileToBase64(file)
+      formData.append('fileName', file.name)
+      formData.append('fileType', file.type)
+      if (typeof base64String === 'string') {
+        formData.append('file', base64String) // Append Base64 string to FormData
+      }
+      const fileBytes = await file.arrayBuffer()
 
-        const byteArray = new Uint8Array(fileBytes);
-        
-        // Optionally, print only the first 100 bytes to avoid large console logs
-        console.log('First 100 bytes:', byteArray.slice(0, 100));
+      const byteArray = new Uint8Array(fileBytes)
 
-        // Append the array buffer as a byte array (Uint8Array)
-        // formData.append('file', base64, file.name);
+      // Optionally, print only the first 100 bytes to avoid large console logs
+      console.log('First 100 bytes:', byteArray.slice(0, 100))
 
-        // Log the size of the byte array
-        console.log('Byte array size:', fileBytes.byteLength);
+      // Append the array buffer as a byte array (Uint8Array)
+      // formData.append('file', base64, file.name);
+
+      // Log the size of the byte array
+      console.log('Byte array size:', fileBytes.byteLength)
       const response = await axios.post(
         'http://127.0.0.1:5000/auricle',
         formData,
