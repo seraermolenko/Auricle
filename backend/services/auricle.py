@@ -31,7 +31,7 @@ def transcribeAndSummarize():
 
         return jsonify({"status": "200", "message": "Successfully auricled your data!", "data": "data"})
     except Exception as e:
-        return jsonify({"status": "400", "message": e})
+        return jsonify({"status": "400", "message": str(e)})
         
 
 def summarize(transcript):

@@ -1,8 +1,11 @@
 from flask import Flask
 from services.auricle import auricleService
 from services.user import userService
+from flask_cors import CORS
 
 app = Flask(__name__)
+
+CORS(app)
 
 # Register the blueprints
 app.register_blueprint(auricleService, url_prefix='/auricle')
