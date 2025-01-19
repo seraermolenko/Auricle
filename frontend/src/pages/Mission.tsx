@@ -55,19 +55,6 @@ const Mission = () => {
           Our Mission
         </Typography>
 
-        <Typography
-          variant="h5"
-          sx={{
-            color: '#485260',
-            maxWidth: '800px',
-            textAlign: 'center',
-            mb: 4,
-          }}
-        >
-          Empowering inclusive education through innovative audio transcription technology
-        </Typography>
-
-        {/* Mission Statement Section */}
         <Box
           sx={{
             backgroundColor: 'white',
@@ -76,7 +63,7 @@ const Mission = () => {
             boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
             maxWidth: '800px',
             width: '100%',
-            mb: 4,
+            mb: 0,
           }}
         >
           <Typography
@@ -95,7 +82,7 @@ const Mission = () => {
           </Typography>
         </Box>
 
-        {/* Key Areas Grid */}
+
         <Grid container spacing={4} sx={{ mt: 2 }}>
           <Grid item xs={12} md={4}>
             <Paper
@@ -108,6 +95,7 @@ const Mission = () => {
                 gap: '1rem',
                 backgroundColor: 'white',
                 borderRadius: '16px',
+                minHeight: '100px',
               }}
               elevation={2}
             >
