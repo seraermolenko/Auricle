@@ -49,6 +49,7 @@ const Feature = () => {
   const [completeTranscription, setCompleteTranscription] = useState('')
   const [message, setMessage] = useState<string>('')
   const [socket, setSocket] = useState(null)
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     // Initialize Socket.IO connection
@@ -98,6 +99,7 @@ const Feature = () => {
   }
 
   const startRecording = async () => {
+    audioChunksRef.current = []
     toast('Recording started', {
       action: { label: 'Cancel', onClick: stopRecording },
     })
@@ -116,9 +118,11 @@ const Feature = () => {
     // When recording stops, create the audio blob and set the URL
     mediaRecorder.onstop = () => {
       const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/wav' })
+      const audioFile = new File([audioBlob], 'recording.wav', { type: 'audio/wav' })
+      setFile(audioFile) // Set the file state
       const audioUrl = URL.createObjectURL(audioBlob)
-      setAudioURL(audioUrl)
-      audioChunksRef.current = [] // Clear the audio chunks for the next recording
+      setAudioURL(audioUrl) // Create a preview URL
+      // audioChunksRef.current = [] // Clear the audio chunks
     }
 
     // Start recording
@@ -136,11 +140,14 @@ const Feature = () => {
     console.log('here')
     setFile(null)
     setData('')
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // Clear the file input
+    }
+    toast('File cleared')
   }
 
   // Stop recording audio
-  const stopRecording = () => {
-    toast('Recording stopped ... sending to Auracle')
+  const stopRecording = async () => {
     console.log('stop recording')
     if (streamRef.current) {
       stopAudioStream(streamRef.current)
@@ -149,6 +156,21 @@ const Feature = () => {
       // console.log("here")
       mediaRecorderRef.current.stop() // Stop the recording
       setRecording(false) // Update state
+    }
+    if (file) {
+      setLoading(true)
+      try {
+        await callfetch(file)
+        toast('Recording stopped ... sending to Auracle')
+      } catch (error) {
+        setError('There was a problem with the recording. Please try again')
+        toast('There was a problem with the recording. Please try again')
+      } finally {
+        setLoading(false)
+      }
+    } else {
+      setError('There was a problem with the recording.')
+      toast('There was a problem with the recording. Please try again')
     }
   }
 
@@ -206,6 +228,7 @@ const Feature = () => {
       console.log('File uploaded successfully', response.data)
       toast('File uploaded successfully')
     } catch (error) {
+      console.log("jajaj")
       console.error('Error uploading file:', error)
       setError('Error uploading file')
       toast('Error uploading file')
@@ -218,6 +241,7 @@ const Feature = () => {
     if (file) {
       setLoading(true)
       await callfetch(file)
+      toast('File submitted to Auracle')
     } else {
       setError('Please select a file before submitting.')
       toast('Please select a file before submitting.')
@@ -272,7 +296,7 @@ const Feature = () => {
             <span className="grid w-full max-w-sm items-center gap-1.5">
               <Label htmlFor="audio">Upload lecture recording here</Label>
               <span className="flex flex-row gap-2">
-                <Input id="audio" type="file" onChange={handleFileChange} />
+                <Input id="audio" type="file" onChange={handleFileChange} ref={fileInputRef}/>
                 <Button size="icon" onClick={clearFile}>
                   <ClearIcon />
                 </Button>

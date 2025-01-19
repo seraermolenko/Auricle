@@ -39,8 +39,8 @@ export function TabsDemo(data: DataProps) {
           </CardHeader>
           <CardContent className="flex-grow overflow-hidden">
             <ScrollArea className="h-full">
-              {data.data && data.data.data.summary
-                ? data.data.data.summary
+              {data.data && data.data.data?.summary
+                ? data.data.data?.summary
                 : 'No summary available yet... Start recording or upload a file to get started.'}
             </ScrollArea>
           </CardContent>
@@ -56,8 +56,8 @@ export function TabsDemo(data: DataProps) {
           </CardHeader>
           <CardContent className="flex-grow overflow-hidden">
             <ScrollArea className="h-full">
-              {data.data && data.data.data.transcription
-                ? data.data.data.transcription
+              {data.data && data.data.data?.transcription
+                ? data.data.data?.transcription
                 : 'No transcription available yet... Start recording or upload a file to get started.'}
             </ScrollArea>
           </CardContent>
