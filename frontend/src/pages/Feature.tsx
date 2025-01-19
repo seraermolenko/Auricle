@@ -7,6 +7,8 @@ import { Label } from '@/components/ui/label'
 import { Box } from '@mui/material'
 import { useRef } from 'react'
 import Paper from '@mui/material/Paper'
+import { toast } from 'sonner'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import {
   Drawer,
   DrawerClose,
@@ -17,10 +19,19 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from '@/components/ui/drawer'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { TabsDemo } from '@/components/tabsdemo'
 
 const Feature = () => {
   const navigate = useNavigate()
-  const [data, setData] = useState(null)
+  const [data, setData] = useState<string>('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const [file, setFile] = useState<File | null>(null)
@@ -28,14 +39,19 @@ const Feature = () => {
   const audioChunksRef = useRef<Blob[]>([])
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
   const [audioURL, setAudioURL] = useState<string | null>(null)
+  const streamRef = useRef<MediaStream | null>(null)
 
   const goToFeature = () => {
     navigate('/')
   }
 
   const startRecording = async () => {
+    toast('Recording started', {
+      action: { label: 'Cancel', onClick: stopRecording },
+    })
     // Get user media (microphone access)
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true })
+    streamRef.current = stream
 
     // Create a MediaRecorder instance to record audio
     const mediaRecorder = new MediaRecorder(stream)
@@ -59,8 +75,18 @@ const Feature = () => {
     setRecording(true)
   }
 
+  const stopAudioStream = (stream: MediaStream) => {
+    const tracks = stream.getTracks()
+    tracks.forEach((track) => track.stop())
+  }
+
   // Stop recording audio
   const stopRecording = () => {
+    toast('Recording stopped')
+    console.log('stop recording')
+    if (streamRef.current) {
+      stopAudioStream(streamRef.current)
+    }
     if (mediaRecorderRef.current) {
       // console.log("here")
       mediaRecorderRef.current.stop() // Stop the recording
@@ -126,6 +152,7 @@ const Feature = () => {
         formData,
         config,
       )
+      setData(response.data ?? '')
       console.log('File uploaded successfully', response.data)
     } catch (error) {
       console.error('Error uploading file:', error)
@@ -193,29 +220,21 @@ const Feature = () => {
                 width: '100%',
               }}
             >
-              <Button onClick={recording ? stopRecording : startRecording}>
-                {recording ? 'Stop Recording' : 'Start Recording'}
-              </Button>
-              <Button onClick={handleClick} disabled={loading}>
-                Send File to Auracle
-              </Button>
-              {loading && <p>Loading...</p>}
-              {error && <p>{error}</p>}
+              <Box>
+                <Button onClick={recording ? stopRecording : startRecording}>
+                  {recording ? 'Stop Recording' : 'Start Recording'}
+                </Button>
+                <Button onClick={handleClick} disabled={loading}>
+                  Send File to Auracle
+                </Button>
+                {loading && <p className="padding-top: 1rem">Loading...</p>}
+                {error && <p className="padding-top: 1rem">{error}</p>}
+              </Box>
             </Box>
           </Paper>
 
           <Paper elevation={0} sx={{ padding: '1rem', width: '70%' }}>
-            <h2>Summary</h2>
-            <Box
-              sx={{
-                padding: '1rem',
-                border: '1px solid #d3d3d3',
-                borderRadius: '12px',
-                textAlign: 'center',
-              }}
-            >
-              <p>{data ? data : 'No summary available yet...'}</p>
-            </Box>
+            <TabsDemo data={data ?? ''} />
           </Paper>
           <Drawer>
             <DrawerTrigger asChild>
