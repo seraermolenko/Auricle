@@ -9,6 +9,7 @@ import { useRef } from 'react'
 import Paper from '@mui/material/Paper'
 import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
+import ClearIcon from '@mui/icons-material/Clear'
 import {
   Drawer,
   DrawerClose,
@@ -47,35 +48,48 @@ const Feature = () => {
   // sockets
   const [completeTranscription, setCompleteTranscription] = useState('')
   const [message, setMessage] = useState<string>('')
-  const [ws, setWs] = useState<WebSocket | null>(null)
+  const [socket, setSocket] = useState(null)
 
   useEffect(() => {
-    const socket = new WebSocket('ws://127.0.0.1:5000/auricle') // replace with your server URL
+    // Initialize Socket.IO connection
+    const newSocket = io('http://127.0.0.1:5001', {
+      transports: ['websocket'],
+      reconnection: true,
+      reconnectionAttempts: 5,
+    })
 
-    // Set WebSocket instance in state
-    setWs(socket)
+    // Connection event handlers
+    newSocket.on('connect', () => {
+      console.log('Socket.IO connection established!')
+      newSocket.emit('hello', 'Hello, server!')
+    })
 
-    // Handle incoming messages from WebSocket server
-    socket.onmessage = (event) => {
-      console.log('Message received:', event.data)
-      setMessage(event.data) // Update state with received message
-      toast(event.data)
-    }
+    newSocket.on('connect_error', (error) => {
+      console.error('Connection error:', error)
+    })
 
-    // Handle WebSocket errors
-    socket.onerror = (error) => {
-      console.error('WebSocket Error:', error)
-      toast('WebSocket Error')
-    }
+    // Listen for transcription events
+    newSocket.on('transcription_complete', (data) => {
+      console.log('Received transcription:', data.text)
+      setMessage(data.text)
+      setCompleteTranscription(data.text)
+      toast('Transcription complete!')
+    })
 
-    // Handle WebSocket connection closure
-    socket.onclose = () => {
-      console.log('WebSocket connection closed')
-    }
+    newSocket.on('summary_complete', (data) => {
+      console.log('Received summary:', data.text)
+      setMessage(data.text)
+      setCompleteTranscription(data.text)
+      toast('Summary complete!')
+    })
 
-    // Cleanup WebSocket connection when the component is unmounted
+    setSocket(newSocket)
+
+    // Cleanup on component unmount
     return () => {
-      socket.close()
+      if (newSocket) {
+        newSocket.disconnect()
+      }
     }
   }, [])
 
@@ -118,9 +132,15 @@ const Feature = () => {
     tracks.forEach((track) => track.stop())
   }
 
+  const clearFile = () => {
+    console.log('here')
+    setFile(null)
+    setData('')
+  }
+
   // Stop recording audio
   const stopRecording = () => {
-    toast('Recording stopped')
+    toast('Recording stopped ... sending to Auracle')
     console.log('stop recording')
     if (streamRef.current) {
       stopAudioStream(streamRef.current)
@@ -178,7 +198,7 @@ const Feature = () => {
       // Log the size of the byte array
       console.log('Byte array size:', fileBytes.byteLength)
       const response = await axios.post(
-        'http://127.0.0.1:5000/auricle',
+        'http://127.0.0.1:5001/auricle',
         formData,
         config,
       )
@@ -238,10 +258,25 @@ const Feature = () => {
             Record or upload your lecture audio for real-time transcription and
             summarization
           </p>
-          <Paper elevation={0} sx={{ padding: '1rem', marginBottom: '1rem' }}>
+          <Paper
+            elevation={0}
+            sx={{
+              padding: '1rem',
+              marginBottom: '1rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
             <span className="grid w-full max-w-sm items-center gap-1.5">
               <Label htmlFor="audio">Upload lecture recording here</Label>
-              <Input id="audio" type="file" onChange={handleFileChange} />
+              <span className="flex flex-row gap-2">
+                <Input id="audio" type="file" onChange={handleFileChange} />
+                <Button size="icon" onClick={clearFile}>
+                  <ClearIcon />
+                </Button>
+              </span>
             </span>
             <Box
               sx={{
