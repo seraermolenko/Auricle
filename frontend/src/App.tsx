@@ -2,6 +2,8 @@ import './App.css'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Feature from './pages/Feature'
+import Learning from './pages/Learning'
+import Mission from './pages/Mission'
 import { Toaster } from '@/components/ui/sonner'
 import { Box, Typography, Button } from '@mui/material'
 import {
@@ -48,7 +50,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="feature" element={<Feature />} />
-          <Route path="mission" element={<Feature />} />
+          <Route path="mission" element={<Mission />} />
+          <Route path="learning" element={<Learning />} />
         </Routes>
         <Toaster />
       </Router>

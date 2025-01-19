@@ -12,6 +12,12 @@ const Home = () => {
   const goToFeature = () => {
     navigate('/feature')
   }
+  const goToMission = () => {
+    navigate('/mission')
+  }
+  const goToLearning = () => {
+    navigate('/learning')
+  }
   return (
     <Paper
       sx={{
@@ -90,7 +96,7 @@ const Home = () => {
             sx={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}
           >
             <Grid2 xs={12} sm={4}>
-              <Paper
+              <Paper onClick={goToFeature}
                 sx={{
                   padding: '50px',
                   display: 'flex',
@@ -153,7 +159,7 @@ const Home = () => {
             </Grid2>
 
             <Grid2 xs={12} sm={4}>
-              <Paper
+              <Paper onClick={goToMission}
                 sx={{
                   padding: '50px',
                   display: 'flex',
@@ -195,7 +201,7 @@ const Home = () => {
                 >
                   <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                     {' '}
-                    Generate Notes
+                    Our Mission
                   </Typography>
                 </Box>
                 <Box
@@ -209,14 +215,14 @@ const Home = () => {
                     variant="h6"
                     sx={{ color: '#485260', fontSize: '1rem' }}
                   >
-                    Get real-time transcripts as the lecture progresses, with high accuracy.
+                    To advance inclusion and awareness for the hearing-impaired.
                   </Typography>
                 </Box>
               </Paper>
             </Grid2>
 
             <Grid2 xs={12} sm={4}>
-              <Paper
+              <Paper onClick={goToLearning}
                 sx={{
                   padding: '50px',
                   display: 'flex',
