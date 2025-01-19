@@ -7,15 +7,15 @@ import SchoolIcon from '@mui/icons-material/School'
 
 const Mission = () => {
   const navigate = useNavigate()
-  
+
   const goToFeature = () => {
     navigate('/feature')
   }
-  
+
   const goToHome = () => {
     navigate('/')
   }
-  
+
   const goToLearning = () => {
     navigate('/learning')
   }
@@ -75,13 +75,13 @@ const Mission = () => {
               textAlign: 'center',
             }}
           >
-            We are dedicated to breaking down barriers in education by providing cutting-edge 
-            audio transcription solutions. Our goal is to ensure that every student, 
-            regardless of their hearing ability, has equal access to educational content 
-            and can participate fully in their learning journey.
+            We are dedicated to breaking down barriers in education by providing
+            cutting-edge audio transcription solutions. Our goal is to ensure
+            that every student, regardless of their hearing ability, has equal
+            access to educational content and can participate fully in their
+            learning journey.
           </Typography>
         </Box>
-
 
         <Grid container spacing={4} sx={{ mt: 2 }}>
           <Grid item xs={12} md={4}>
@@ -99,13 +99,18 @@ const Mission = () => {
               }}
               elevation={2}
             >
-              <AccessibilityNewIcon sx={{ fontSize: '3rem', color: '#003f6a' }} />
-              <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#2c3e50' }}>
+              <AccessibilityNewIcon
+                sx={{ fontSize: '3rem', color: '#003f6a' }}
+              />
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: 'bold', color: '#2c3e50' }}
+              >
                 Accessibility
               </Typography>
               <Typography sx={{ color: '#485260', textAlign: 'center' }}>
-                Making educational content accessible to everyone through real-time 
-                transcription and note-taking assistance.
+                Making educational content accessible to everyone through
+                real-time transcription and note-taking assistance.
               </Typography>
             </Paper>
           </Grid>
@@ -125,12 +130,15 @@ const Mission = () => {
               elevation={2}
             >
               <GroupsIcon sx={{ fontSize: '3rem', color: '#003f6a' }} />
-              <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#2c3e50' }}>
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: 'bold', color: '#2c3e50' }}
+              >
                 Inclusion
               </Typography>
               <Typography sx={{ color: '#485260', textAlign: 'center' }}>
-                Creating an inclusive learning environment where all students can 
-                participate and succeed together.
+                Creating an inclusive learning environment where all students
+                can participate and succeed together.
               </Typography>
             </Paper>
           </Grid>
@@ -150,12 +158,15 @@ const Mission = () => {
               elevation={2}
             >
               <SchoolIcon sx={{ fontSize: '3rem', color: '#003f6a' }} />
-              <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#2c3e50' }}>
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: 'bold', color: '#2c3e50' }}
+              >
                 Innovation
               </Typography>
               <Typography sx={{ color: '#485260', textAlign: 'center' }}>
-                Leveraging AI technology to provide smart, accurate, and reliable 
-                transcription services for educational content.
+                Leveraging AI technology to provide smart, accurate, and
+                reliable transcription services for educational content.
               </Typography>
             </Paper>
           </Grid>
@@ -171,17 +182,10 @@ const Mission = () => {
             justifyContent: 'center',
           }}
         >
-          <Button
-            onClick={goToHome}
-            variant="outline"
-            className="px-6 py-2"
-          >
+          <Button onClick={goToHome} variant="outline" className="px-6 py-2">
             Back to Home
           </Button>
-          <Button
-            onClick={goToFeature}
-            className="px-6 py-2"
-          >
+          <Button onClick={goToFeature} className="px-6 py-2">
             Try it Now
           </Button>
           <Button

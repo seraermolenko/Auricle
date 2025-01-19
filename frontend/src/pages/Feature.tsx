@@ -301,7 +301,7 @@ const Feature = () => {
             gap: '1rem',
           }}
         >
-          <h1 style={{ color: '#003f6a', marginTop: '4rem' }}>
+          <h1 style={{ color: '#003f6a', marginTop: '-4rem' }}>
             Lecture Transcriber
           </h1>
           <p style={{ color: '#6f93ae'}}>
@@ -367,7 +367,12 @@ const Feature = () => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button onClick={goToQuiz} size="icon" variant="outline" style={{position: 'absolute', top: '28rem', right: '22rem'}}>
+                <Button
+                  onClick={goToQuiz}
+                  size="icon"
+                  variant="outline"
+                  style={{ position: 'absolute', top: '28rem', right: '22rem' }}
+                >
                   <EditNoteIcon />
                 </Button>
               </TooltipTrigger>

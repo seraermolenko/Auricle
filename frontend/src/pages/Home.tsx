@@ -96,7 +96,8 @@ const Home = () => {
             sx={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}
           >
             <Grid2 xs={12} sm={4}>
-              <Paper onClick={goToFeature}
+              <Paper
+                onClick={goToFeature}
                 sx={{
                   padding: '50px',
                   display: 'flex',
@@ -160,7 +161,8 @@ const Home = () => {
             </Grid2>
 
             <Grid2 xs={12} sm={4}>
-              <Paper onClick={goToMission}
+              <Paper
+                onClick={goToMission}
                 sx={{
                   padding: '50px',
                   display: 'flex',
@@ -223,7 +225,8 @@ const Home = () => {
             </Grid2>
 
             <Grid2 xs={12} sm={4}>
-              <Paper onClick={goToLearning}
+              <Paper
+                onClick={goToLearning}
                 sx={{
                   padding: '50px',
                   display: 'flex',

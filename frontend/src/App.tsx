@@ -5,8 +5,8 @@ import Feature from './pages/Feature'
 import Learning from './pages/Learning'
 import Mission from './pages/Mission'
 import { Toaster } from '@/components/ui/sonner'
-import { Box, Typography} from '@mui/material'
-import { NavigationMenu} from '@radix-ui/react-navigation-menu'
+import { Box, Typography } from '@mui/material'
+import { NavigationMenu } from '@radix-ui/react-navigation-menu'
 
 function App() {
   return (
