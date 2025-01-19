@@ -25,6 +25,12 @@ CORS(auricle_service, resources={
     }
 })
 
+socketio = None
+
+def init_socketio(socket_instance):
+    global socketio
+    socketio = socket_instance
+
 class AudioTranscriptionService:
     def __init__(self, chunk_duration: int = 60000):  # duration in milliseconds (60000 = 1 minute)
         self.chunk_duration = chunk_duration
@@ -89,9 +95,19 @@ class AudioTranscriptionService:
             for future in future_to_chunk:
                 chunk_index, text = future.result()
                 transcribed_chunks[chunk_index] = text
-        
+
         # Combine all transcriptions
-        return " ".join(transcribed_chunks)
+        full_transcription = " ".join(transcribed_chunks)
+
+        # emit transcription_complete
+        print("Emitting transcription_complete, sockietio is: ", socketio)
+        if socketio:
+            socketio.emit('transcription_complete', {
+                'text': full_transcription
+            })
+            print(f"done emitting transcription_complete")
+        
+        return full_transcription
 
     def summarize(self, transcript: str) -> str:
         """Summarize the transcribed text using LLM"""
@@ -110,7 +126,13 @@ class AudioTranscriptionService:
             chunk = output["choices"][0]["text"]
             summary.append(chunk)
             
-        return "".join(summary)
+        full_summary = "".join(summary)
+        
+        print("Emitting summary_complete, sockietio is: ", socketio)
+        if socketio:
+            socketio.emit('summary_complete', {'text': full_summary})
+            
+        return full_summary
 
 def convert_to_wav(input_file_path: str, output_dir: str = None) -> str:
     """Convert input audio file to WAV format"""
