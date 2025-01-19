@@ -107,7 +107,7 @@ const Feature = () => {
         formData.append('fileName', file.name);
         formData.append('fileType', file.type);
         if (typeof base64String === 'string') {
-        formData.append('fileData', base64String); // Append Base64 string to FormData
+        formData.append('file', base64String); // Append Base64 string to FormData
         }
         const fileBytes = await file.arrayBuffer();
 
@@ -122,7 +122,7 @@ const Feature = () => {
         // Log the size of the byte array
         console.log('Byte array size:', fileBytes.byteLength);
       const response = await axios.post(
-        'http://localhost:8080/asr/',
+        'http://127.0.0.1:5000/auricle',
         formData,
         config,
       )
