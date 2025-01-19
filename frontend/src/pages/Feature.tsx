@@ -184,6 +184,7 @@ const Feature = () => {
       )
       setData(response.data ?? '')
       console.log('File uploaded successfully', response.data)
+      toast('File uploaded successfully')
     } catch (error) {
       console.error('Error uploading file:', error)
       setError('Error uploading file')
