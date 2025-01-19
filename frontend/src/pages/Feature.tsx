@@ -9,6 +9,7 @@ import { useRef } from 'react'
 import Paper from '@mui/material/Paper'
 import { toast } from 'sonner'
 import { Loader2 } from 'lucide-react'
+import EditNoteIcon from '@mui/icons-material/EditNote'
 import ClearIcon from '@mui/icons-material/Clear'
 import {
   Drawer,
@@ -33,6 +34,12 @@ import SettingsVoiceIcon from '@mui/icons-material/SettingsVoice'
 import FileUploadIcon from '@mui/icons-material/FileUpload'
 import MicOffIcon from '@mui/icons-material/MicOff'
 import io from 'socket.io-client'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
 
 const Feature = () => {
   const navigate = useNavigate()
@@ -96,6 +103,10 @@ const Feature = () => {
 
   const goToFeature = () => {
     navigate('/')
+  }
+
+  const goToQuiz = () => {
+    navigate('/quiz')
   }
 
   const startRecording = async () => {
@@ -294,7 +305,9 @@ const Feature = () => {
             gap: '1rem',
           }}
         >
-          <h1 style={{ color: '#003f6a', marginTop: '-6rem' }}>Lecture Transcriber</h1>
+          <h1 style={{ color: '#003f6a', marginTop: '-6rem' }}>
+            Lecture Transcriber
+          </h1>
           <p style={{ color: '#6f93ae' }}>
             Record or upload your lecture audio for real-time transcription and
             summarization
@@ -355,6 +368,18 @@ const Feature = () => {
               </Button>
             </Box>
           </Paper>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button onClick={goToQuiz} size="icon" variant="outline" style={{position: 'absolute', top: '28rem', right: '22rem'}}>
+                  <EditNoteIcon />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Create quiz</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
 
           <Paper elevation={0} sx={{ padding: '1rem', width: '63%' }}>
             <TabsDemo data={data ?? ''} />

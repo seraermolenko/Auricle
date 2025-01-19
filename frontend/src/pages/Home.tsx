@@ -152,7 +152,8 @@ const Home = () => {
                     variant="h6"
                     sx={{ color: '#485260', fontSize: '1rem' }}
                   >
-                    Record lectures directly in your browser or upload existing audio files.
+                    Record lectures directly in your browser or upload existing
+                    audio files.
                   </Typography>
                 </Box>
               </Paper>
@@ -278,8 +279,8 @@ const Home = () => {
                     variant="h6"
                     sx={{ color: '#485260', fontSize: '1rem' }}
                   >
-                    Ai-powered, notes and quizzes that enhance your
-                    learning experience.
+                    Ai-powered, notes and quizzes that enhance your learning
+                    experience.
                   </Typography>
                 </Box>
               </Paper>

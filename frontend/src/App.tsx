@@ -34,15 +34,18 @@ function App() {
           right: 0,
         }}
       >
-        <a href='/' rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
+        <a
+          href="/"
+          rel="noopener noreferrer"
+          style={{ color: 'inherit', textDecoration: 'none' }}
+        >
           <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
             Auricle
           </Typography>
         </a>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <NavigationMenu className="relative">
-          </NavigationMenu>
+          <NavigationMenu className="relative"></NavigationMenu>
         </Box>
       </Box>
 
