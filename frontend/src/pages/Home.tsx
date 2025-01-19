@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Box, Paper } from '@mui/material'
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { Typography, Grid2} from "@mui/material";
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
+import { Typography, Grid2 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
@@ -13,7 +13,6 @@ const Home = () => {
     navigate('/feature')
   }
   return (
-    
     <Paper
       sx={{
         backgroundColor: '#f5faff',
@@ -40,29 +39,37 @@ const Home = () => {
             variant="h1"
             sx={{
               color: '#003f6a',
-              fontFamily: 'Poppins, sans-serif', 
-              fontWeight: 'bold', 
-              fontSize: '4rem', 
+              fontFamily: 'Poppins, sans-serif',
+              fontWeight: 'bold',
+              fontSize: '4rem',
               mt: 4,
             }}
           >
             Transform Audio into Notes
           </Typography>
 
-          <p style={{ color: '#485260', fontSize: '2rem'}}>
-          Transforming Sound into Understanding
+          <p style={{ color: '#485260', fontSize: '2rem' }}>
+            Transforming Sound into Understanding
           </p>
 
           <Box>
             <span className="Grid w-full max-w-sm items-center gap-1.5">
-              <Button 
-              onClick={goToFeature} 
-              size="lg"
-              className="px-12 py-8 text-xl font-semibold mt-10"
-            > 
-              Start Recording
-              <ArrowForwardIcon sx={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '40px'}} />
-            </Button>
+              <Button
+                onClick={goToFeature}
+                size="lg"
+                className="px-12 py-8 text-xl font-semibold mt-10"
+              >
+                Start Recording
+                <ArrowForwardIcon
+                  sx={{
+                    color: 'white',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontSize: '40px',
+                  }}
+                />
+              </Button>
             </span>
             <Paper
               sx={{
@@ -74,23 +81,26 @@ const Home = () => {
                 margin: '1rem',
               }}
               elevation={0}
-            >      
-            </Paper>
+            ></Paper>
           </Box>
 
-          <Grid2 container spacing={4} sx={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+          <Grid2
+            container
+            spacing={4}
+            sx={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}
+          >
             <Grid2 xs={12} sm={4}>
               <Paper
                 sx={{
-                  padding: "50px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "white",
-                  color: "#2c3e50",
-                  minHeight: "100px",
-                  borderRadius: "16px",
-                  flexDirection: 'column'
+                  padding: '50px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: 'white',
+                  color: '#2c3e50',
+                  minHeight: '100px',
+                  borderRadius: '16px',
+                  flexDirection: 'column',
                 }}
                 elevation={2}
               >
@@ -104,15 +114,41 @@ const Home = () => {
                     alignItems: 'center',
                   }}
                 >
-                  <KeyboardVoiceIcon sx={{ color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center'}} />
+                  <KeyboardVoiceIcon
+                    sx={{
+                      color: 'white',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  />
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '20px'}}>
-                <Typography variant="h6" sx={{ fontWeight: 'bold' }}> Record Audio</Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginTop: '20px',
+                  }}
+                >
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    {' '}
+                    Record Audio
+                  </Typography>
                 </Box>
-                <Box sx={{ wordWrap: 'break-word', overflowWrap: 'break-word', maxWidth: '200px'}}>
-                <Typography variant="h6" sx={{ color: '#485260', fontSize: '1rem' }}>
-                  Ai-powered, personalized notes and quizzes that enhance your learning experience.
-                </Typography>
+                <Box
+                  sx={{
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word',
+                    maxWidth: '200px',
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{ color: '#485260', fontSize: '1rem' }}
+                  >
+                    Ai-powered, personalized notes and quizzes that enhance your
+                    learning experience.
+                  </Typography>
                 </Box>
               </Paper>
             </Grid2>
@@ -120,15 +156,15 @@ const Home = () => {
             <Grid2 xs={12} sm={4}>
               <Paper
                 sx={{
-                  padding: "50px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "white",
-                  color: "#2c3e50",
-                  minHeight: "100px",
-                  borderRadius: "16px",
-                  flexDirection: 'column'
+                  padding: '50px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: 'white',
+                  color: '#2c3e50',
+                  minHeight: '100px',
+                  borderRadius: '16px',
+                  flexDirection: 'column',
                 }}
                 elevation={2}
               >
@@ -151,13 +187,32 @@ const Home = () => {
                     }}
                   />
                 </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '20px' }}>
-                <Typography variant="h6" sx={{ fontWeight: 'bold' }}> Generate Notes</Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginTop: '20px',
+                  }}
+                >
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    {' '}
+                    Generate Notes
+                  </Typography>
                 </Box>
-                <Box sx={{ wordWrap: 'break-word', overflowWrap: 'break-word', maxWidth: '200px'}}>
-                <Typography variant="h6" sx={{ color: '#485260', fontSize: '1rem' }}>
-                  Ai-powered, personalized notes and quizzes that enhance your learning experience.
-                </Typography>
+                <Box
+                  sx={{
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word',
+                    maxWidth: '200px',
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{ color: '#485260', fontSize: '1rem' }}
+                  >
+                    Ai-powered, personalized notes and quizzes that enhance your
+                    learning experience.
+                  </Typography>
                 </Box>
               </Paper>
             </Grid2>
@@ -165,21 +220,21 @@ const Home = () => {
             <Grid2 xs={12} sm={4}>
               <Paper
                 sx={{
-                  padding: "50px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: "white",
-                  color: "#2c3e50",
-                  minHeight: "100px",
-                  borderRadius: "16px",
-                  flexDirection: 'column'
+                  padding: '50px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: 'white',
+                  color: '#2c3e50',
+                  minHeight: '100px',
+                  borderRadius: '16px',
+                  flexDirection: 'column',
                 }}
                 elevation={2}
               >
                 <Box
                   sx={{
-                    backgroundColor: "#2c3e50",
+                    backgroundColor: '#2c3e50',
                     borderRadius: '50%',
                     padding: '10px',
                     display: 'flex',
@@ -197,13 +252,31 @@ const Home = () => {
                   />
                 </Box>
 
-                <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '20px' }}>
-                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>Smart Learning</Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    marginTop: '20px',
+                  }}
+                >
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                    Smart Learning
+                  </Typography>
                 </Box>
-                <Box sx={{ wordWrap: 'break-word', overflowWrap: 'break-word', maxWidth: '200px'}}>
-                <Typography variant="h6" sx={{ color: '#485260', fontSize: '1rem' }}>
-                  Ai-powered, personalized notes and quizzes that enhance your learning experience.
-                </Typography>
+                <Box
+                  sx={{
+                    wordWrap: 'break-word',
+                    overflowWrap: 'break-word',
+                    maxWidth: '200px',
+                  }}
+                >
+                  <Typography
+                    variant="h6"
+                    sx={{ color: '#485260', fontSize: '1rem' }}
+                  >
+                    Ai-powered, personalized notes and quizzes that enhance your
+                    learning experience.
+                  </Typography>
                 </Box>
               </Paper>
             </Grid2>

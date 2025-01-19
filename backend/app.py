@@ -1,15 +1,16 @@
 from flask import Flask
-from services.auricle import auricleService
-from services.user import userService
+from services.auricle import auricle_service
 from flask_cors import CORS
 
 app = Flask(__name__)
 
 CORS(app)
+CORS(app, origins=["http://localhost:5173/"])
 
-# Register the blueprints
-app.register_blueprint(auricleService, url_prefix='/auricle')
-app.register_blueprint(userService, url_prefix='/users')
+app.config['MAX_CONTENT_LENGTH'] = 26836840000000
+app.config['MAX_FORM_MEMORY_SIZE'] = 26836840000000
+
+app.register_blueprint(auricle_service, url_prefix='/auricle')
 
 @app.route('/')
 def hello():
