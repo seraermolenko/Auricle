@@ -195,7 +195,7 @@ const Home = () => {
                 >
                   <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                     {' '}
-                    Generate Notes
+                    Our Mission
                   </Typography>
                 </Box>
                 <Box
@@ -209,7 +209,7 @@ const Home = () => {
                     variant="h6"
                     sx={{ color: '#485260', fontSize: '1rem' }}
                   >
-                    Get real-time transcripts as the lecture progresses, with high accuracy.
+                    To advance inclusion and awareness for the hearing-impaired.
                   </Typography>
                 </Box>
               </Paper>
