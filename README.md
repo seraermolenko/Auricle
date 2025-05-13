@@ -1,3 +1,5 @@
+**I worked on this hackathon project with: Vlad Bors, David Murgulet, Noel Illing and Henry Kim**
+
 # auricle
 
 This is a web application designed to assist users, especially those who are deaf or hard of hearing, by transforming audio recordings into written text and summarized notes. The application also provides additional functionality to create quizzes or practice exams from the transcribed notes, enhancing learning and accessibility.
